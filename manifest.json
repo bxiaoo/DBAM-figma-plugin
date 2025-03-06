@@ -1,0 +1,21 @@
+{
+  "name": "DAM asset library PoC",
+  "id": "1475784822115612524",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "documentAccess": "dynamic-page",
+  "editorType": [
+    "figma",
+    "figjam"
+  ],
+  "networkAccess": {
+    "allowedDomains": [
+      "https://api.figma.com",
+      "https://s3-alpha.figma.com",
+      "https://unitedinternet.aprimo.com"
+    ]
+  }
+}

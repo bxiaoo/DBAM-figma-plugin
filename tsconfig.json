@@ -1,0 +1,30 @@
+//{
+//  "compilerOptions": {
+//    "target": "es6",
+//    "lib": ["es6", "dom"],
+//    "strict": false,
+//    "typeRoots": [
+//      "./node_modules/@types",
+//      "./node_modules/@figma"
+//    ]
+//  }
+//}
+
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext", "dom"],
+    "moduleResolution": "node",
+    "allowJs": true,
+    "jsx": "react",        // or "preserve", depending on your UI approach
+    "strict": true,
+    "outDir": "./dist",
+    "typeRoots": [
+      "node_modules/@types",
+      "node_modules/@figma"
+    ]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
+}
