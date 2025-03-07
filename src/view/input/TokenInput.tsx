@@ -12,17 +12,22 @@ export function Input ({ onSaveToken }: TokenInputProps) {
     }
 
     return (
-        <div>
+        <div className='input'>
         <label>
-            Input
+            Personal token
             <input type='text'
                    value={token}
                    onChange={(e) => setToken(e.target.value)}
-                   placeholder="Search..." />
+                   placeholder="Token placeholder" />
         </label>
+            <div>
             <button
+                className="button"
                 onClick={handleSave}
-            >Save Token</button>
+            >
+                Check token
+            </button>
+            </div>
         </div>
     )
 }

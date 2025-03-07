@@ -75,7 +75,8 @@ function App() {
 
     return (
         <div id="plugin-window">
-            <div className="tab-nav">
+            <nav>
+                <div className='tab-nav'>
                 <button
                     className={activeTab === "aprimo" ? "active" : ""}
                     onClick={() => {
@@ -103,9 +104,10 @@ function App() {
                 >
                     <img src={require('./assets/devicon_figma.svg')} />
                 </button>
-            </div>
+                </div>
+            </nav>
 
-            <div>
+            <div id='content-container'>
                 {activeTab === "aprimo" && <AprimoTab />}
                 {activeTab === "gdrive" && <GDriveTab />}
                 {activeTab === "figma" && <FigmaTab defaultLib={libraryFiles[0].libraries[0]} msgCallback={handleInsertMsg} />}

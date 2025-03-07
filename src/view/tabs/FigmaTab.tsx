@@ -69,14 +69,20 @@ export function FigmaTab({defaultLib, msgCallback}: FigmaTabProps) {
 
     return (
         <div>
-            <h3>Authentication</h3>
-            <p>This token is requested to fetch assets from your account.</p>
-            <Input onSaveToken={handleTokenSave} />
+            <div id='setting'>
+                <div className='headline'>
+                    <h1>Authentication</h1>
+                    <p>This token is requested to fetch assets from your account.</p>
+                </div>
+                <Input onSaveToken={handleTokenSave} />
+            </div>
 
-            {libList && <LibDropdown handleLibChange={handleLibChange} options={libList} />}
-            {assetList && <AssetList assets={assetList} currentFileId={currentFileId!} sizes={currentSizes} />}
+            {assetList && <div className='asset-view'>
+                {libList && <LibDropdown handleLibChange={handleLibChange} options={libList} />}
+                {assetList && <AssetList assets={assetList} currentFileId={currentFileId!} sizes={currentSizes} />}
 
-            {showModal && currentSizes && selectedAsset && <InsertModal asset={selectedAsset} sizes={currentSizes}  />}
+                {showModal && currentSizes && selectedAsset && <InsertModal asset={selectedAsset} sizes={currentSizes}  />}
+            </div>}
         </div>
     );
 }

@@ -1,8 +1,9 @@
 body {
     font-size: 14px;
-    font-family: sans-serif;
+    font-family: "Open Sans", "Overpass", sans-serif;
     margin: 0;
     background-color: #F4F7FA;
+    color: #001B41;
 }
 
 #plugin-window {
@@ -10,8 +11,27 @@ body {
     height: 100%;
 }
 
+nav {
+    position: fixed;
+    height: 100%;
+
+    background: white;
+}
+
+.tab-nav {
+    position:static;
+    display: flex;
+    flex-direction: column;
+}
+
+#content-container {
+    margin-left: 3.5rem;
+}
+
 h1 {
-    font-weight: normal;
+    font-family: "Overpass", sans-serif;
+    font-size: 32px;
+    font-weight: 400;
     margin: 0;
 }
 
@@ -19,7 +39,13 @@ p {
     margin: 0;
 }
 
-#settings {
+.headline {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+#setting {
     display: flex;
     padding: 1rem;
     flex-direction: column;
@@ -67,26 +93,35 @@ p {
     z-index: 999;
 }
 
-#bottom-modal.visible {
-    transform: translateY(0%);
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.input label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    font-size: 12px;
+    font-weight: 600;
 }
 
 input {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: start;
-    background-color: white;
-    border: #8896AA 1px solid;
-    padding: 8px;
     font-size: 12px;
-    width: 100%;
-    margin-top: 0.25rem;
 
+    padding: 0.5rem;
+    border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-.main-cta {
+input:focus {
+    outline: none;
+    border-color: #333;
+}
+
+.button {
     background-color: #333;
     color: white;
     padding: 8px 16px;
@@ -96,45 +131,6 @@ input {
     border-radius: 999px;
 }
 
-#library-config {
-    margin-top: 1rem;
-}
-
-#library-seletor {
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 4px;
-}
-
-#iconList {
-    padding-left: 1rem;
-    padding-right: 1rem;
-
-    display: inline-grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    column-gap: 8px;
-    row-gap: 8px;
-}
-
-.icon-item {
-    display: flex;
-    flex-direction: column;
-
-    all: unset;
-}
-
-.icon-item:hover {
-    cursor: pointer;
-    background: #3196D61A;
-}
-
-.tab-nav {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-
-    background: white;
-}
 .tab-nav button {
     padding: 0.75rem;
     border: none;
@@ -148,24 +144,4 @@ input {
     display: none;
     width: 100%;
     background-color: #F4F7FA;
-}
-.tab-content.active {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-.assets-list {
-    list-style: none;
-}
-.assets-list li {
-    margin: 8px 0;
-}
-.icon-img {
-    width: 24px;
-    height: 24px;
-    vertical-align: middle;
-    margin-right: 8px;
-}
-.fetch-btn {
-    margin-top: 8px;
 }
