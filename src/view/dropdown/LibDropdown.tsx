@@ -1,5 +1,5 @@
 import * as React from "react";
-import {IBrandLibraries, ILibrary} from "../../model/figmaAsset";
+import {IBrandLibraries} from "../../model/figmaAsset";
 
 interface LibDropdownProps {
     handleLibChange: (fileId: string) => void;
@@ -18,15 +18,16 @@ export const LibDropdown = ({handleLibChange, options}:LibDropdownProps) => {
         }
     }, [LibSelector.current]);
 
-    return (<div>
-        <select ref={LibSelector}>
-            {options.map((option) => {
-                return <optgroup key={option.brand} label={option.brand}>
-                    {option.libraries.map((lib) => {
-                        return <option key={lib.fileId} value={lib.fileId}>{lib.name}</option>
-                    })}
-                </optgroup>
-            })}
-        </select>
-    </div>)
+    return (
+        <div>
+            <select ref={LibSelector}>
+                {options.map((option) => {
+                    return <optgroup key={option.brand} label={option.brand}>
+                        {option.libraries.map((lib) => {
+                            return <option key={lib.fileId} value={lib.fileId}>{lib.name}</option>
+                        })}
+                    </optgroup>
+                })}
+            </select>
+        </div>)
 }

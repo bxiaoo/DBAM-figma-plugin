@@ -1,29 +1,35 @@
 import {IAsset} from "../model/assetItem";
 
-export async function fetchFigmaAssets(token:string, fileId:string = "W862WSkHvk3J0MAYGIdwDQ"):Promise<IAsset[]> {
+export async function fetchFigmaAssets(token:string, fileId:string):Promise<IAsset[]> {
     const url = `https://api.figma.com/v1/files/${fileId}/components`;
-    const resp = await fetch(url, {
-        method: "GET",
-        headers: {
-            "X-Figma-Token": token
+
+    try {
+        const resp = await fetch(url, {
+            method: "GET",
+            headers: {
+                "X-Figma-Token": token
+            }
+        });
+
+        if (!resp.ok) {
+            throw new Error(`Invalid token, please check it or regenerate from your figma configuration: ${resp.status}`);
         }
-    });
-    if (!resp.ok) {
-        throw new Error(`Invalid token, please check it or regenerate from your figma configuration: ${resp.status}`);
+        const data = await resp.json();
+
+        const components = data.meta.components || [];
+
+        return components.map((c:IAsset) => ({
+            node_id: c.node_id,
+            name: c.name,
+            thumbnail_url: c.thumbnail_url,
+            key: c.key
+        }));
+
+    } catch (error) {
+        throw new Error(`Failed to fetch Figma assets: ${error}`);
     }
-    const data = await resp.json();
 
-    // data.meta.components is an array of { key, node_id, name, description, ... }
-    // We'll build our own array with the info we need.
-    const components = data.meta.components || [];
 
-    return components.map((c:IAsset) => ({
-        node_id: c.node_id,   // This is used to fetch images
-        name: c.name,
-        thumbnail_url: c.thumbnail_url,
-        key: c.key
-        // c.key is also available if you need it for referencing library components
-    }));
 }
 
 export async function fetchAprimoAssets(token: string) {

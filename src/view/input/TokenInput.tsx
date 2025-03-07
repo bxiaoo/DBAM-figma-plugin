@@ -2,9 +2,10 @@ import * as React from "react";
 
 interface TokenInputProps {
     onSaveToken: (token: string) => void;
+    validating: boolean;
 }
 
-export function Input ({ onSaveToken }: TokenInputProps) {
+export function TokenInput ({ onSaveToken, validating }: TokenInputProps) {
     const [token, setToken] = React.useState<string>('');
 
     const handleSave = () => {
@@ -20,13 +21,14 @@ export function Input ({ onSaveToken }: TokenInputProps) {
                    onChange={(e) => setToken(e.target.value)}
                    placeholder="Token placeholder" />
         </label>
-            <div>
-            <button
+            <div className='token-btn-container'>
+                <button
                 className="button"
                 onClick={handleSave}
             >
                 Check token
-            </button>
+                </button>
+                {validating && <span>Validating...</span> }
             </div>
         </div>
     )

@@ -11,7 +11,8 @@ import {FigmaTab} from "./view/tabs/FigmaTab";
 import { Notification } from "./view/notification/Notification";
 
 import "./ui.css";
-import {libraryFiles} from "./model/libraries";
+import {IBrandLibraries} from "./model/figmaAsset";
+// import {libraryFiles} from "./model/libraries";
 // import {IBrandLibraries, ILibrary} from "./model/figmaAsset";
 // import {libraryFiles} from "./model/libraries";
 
@@ -34,12 +35,8 @@ function App() {
     onmessage = (event) => {
         const msg = event.data.pluginMessage;
         switch (msg.type) {
-            // case "init-libraries":
-            //     console.log("init-libraries");
-            //     setLibList(msg.libraries);
-            //     setSelectedLib(msg.libraries[0].libraries[0]);
-            //     break;
             case "aprimo-assets":
+                console.log("Aprimo Assets");
                 // displayAssets("aprimoList", msg.payload);
                 break;
             case "gdrive-assets":
@@ -52,17 +49,6 @@ function App() {
             case "icon-inserted":
                 setNotification("Icon inserted successfully");
                 setTimeout(() => setNotification(''), 2000);
-                break;
-            case "show-notification":
-                setNotification(msg.message);
-                break;
-            case "hide-notification":
-                setTimeout(() => {
-                    setNotification('');
-                }, 2000);
-                break;
-            case "error":
-                alert(`Error fetching from ${msg.resource}: ${msg.message}`);
                 break;
             default:
                 break;
@@ -110,7 +96,7 @@ function App() {
             <div id='content-container'>
                 {activeTab === "aprimo" && <AprimoTab />}
                 {activeTab === "gdrive" && <GDriveTab />}
-                {activeTab === "figma" && <FigmaTab defaultLib={libraryFiles[0].libraries[0]} msgCallback={handleInsertMsg} />}
+                {activeTab === "figma" && <FigmaTab msgCallback={handleInsertMsg} />}
             </div>
 
             {notification && <Notification message={notification} />}
@@ -118,60 +104,4 @@ function App() {
         </div>
     )
 }
-
-// window.onmessage = (e) => {
-//     const msg = e.data.pluginMessage;
-//     if (msg.type === "fetch-aprimo-assets") {
-//         console.log("fetch-aprimo-assets");
-//     }
-// }
-
 createRoot(document.getElementById("root")!).render(<App />);
-
-//
-// btnToken.onclick = () => {
-//     const tokenValue = document.getElementById('apiToken') as HTMLInputElement;
-//
-//     if (tokenValue) {
-//         parent.postMessage({
-//             pluginMessage: {
-//                 type: "save-token",
-//                 token: tokenValue.value.trim()
-//             }
-//         }, "*");
-//     } else {
-//         showNotification("Please enter a valid token", "error");
-//         setTimeout(hideNotification, 2000);
-//     }
-// }
-//
-//
-
-//
-// btnInsert.onclick = () => {
-//     const sizeIndex = parseInt(variantIndex.value.trim());
-//     parent.postMessage({
-//         pluginMessage: {
-//             type: "insert",
-//             key: selectedAssetKey.innerText,
-//             name: selectedAssetName.innerText,
-//             size: findLib({fileId: librarySelector.value.trim()}).sizeVariant[sizeIndex],
-//         }
-//     }, "*");
-// };
-//
-// inputSearch.oninput = () => performSearch(assetList);
-//
-// const tabButtons: ButtonMap = {
-//     aprimo: tabAprimo,
-//     gdrive: tabGDrive,
-//     figma: tabFigma,
-// };
-//
-
-//
-// tabButtons.aprimo.onclick = () => showTab(tabButtons, tabContents, "aprimo");
-// tabButtons.gdrive.onclick = () => showTab(tabButtons, tabContents, "gdrive");
-// tabButtons.figma.onclick = () => showTab(tabButtons, tabContents, "figma");
-//
-//

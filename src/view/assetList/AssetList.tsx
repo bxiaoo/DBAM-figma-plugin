@@ -9,9 +9,15 @@ interface AssetListProps {
     sizes: ISizeVariant[] | null;
 }
 
+interface IDisplaySize {
+    width: string;
+    height: string;
+}
+
 export function AssetList({ assets, currentFileId, sizes }: AssetListProps) {
     const [filteredAssets, setFilteredAssets] = React.useState<IAsset[]>(assets);
     const [selectedAsset, setSelectedAsset] = React.useState<IAsset | null>(null);
+    const [displaySize, setDisplaySize] = React.useState<IDisplaySize>({ width: 'auto', height: 'auto' });
 
     React.useEffect(() => {
         if (selectedAsset && sizes) {
@@ -31,7 +37,13 @@ export function AssetList({ assets, currentFileId, sizes }: AssetListProps) {
                 }
             }, "*");
         }
-    }, [selectedAsset]);
+
+        if (sizes) {
+            setDisplaySize({ width: sizes[sizes.length - 1].x.toString(), height: sizes[sizes.length - 1].y.toString() });
+        } else {
+            setDisplaySize({ width: 'auto', height: 'auto' });
+        }
+    }, [selectedAsset, sizes]);
 
     const handleSearch = (query: string) => {
         const filtered = assets.filter((asset) => {
@@ -47,13 +59,14 @@ export function AssetList({ assets, currentFileId, sizes }: AssetListProps) {
 
     return (
         <div>
-            {assets ? <div>
+            {assets ? <div className='asset-container'>
                 <SearchInput handleSearch={handleSearch} />
-                <div>{filteredAssets.map((asset, index) => {
+                <div className='asset-list'>
+                    {filteredAssets.map((asset, index) => {
                     return (
-                        <button key={index} onClick={() => setSelectedAsset(asset)}>
-                            <img src={asset.thumbnail_url} />
-                            <p>{asset.name}</p>
+                        <button className='asset-item' key={index} onClick={() => setSelectedAsset(asset)}>
+                            <img src={asset.thumbnail_url} width={displaySize.width} height={displaySize.height} />
+                            {/*<p className='asset-name'>{asset.name}</p>*/}
                         </button>
                     );
                 })}</div>

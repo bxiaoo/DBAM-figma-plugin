@@ -6,7 +6,7 @@ export function GDriveTab() {
             <h3>Google Drive</h3>
             <p>Fetch files or icons from Google Drive.</p>
             <button
-                className="fetch-btn"
+                className="button"
                 onClick={() => {
                     parent.postMessage({ pluginMessage: { type: "fetch-gdrive-assets" } }, "*");
                 }}

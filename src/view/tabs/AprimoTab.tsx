@@ -6,7 +6,7 @@ export function AprimoTab() {
             <h3>Aprimo DAM</h3>
             <p>Fetch vector icons or other assets from Aprimo.</p>
             <button
-                className="fetch-btn"
+                className="button"
                 onClick={() => {
                     parent.postMessage({ pluginMessage: { type: "fetch-aprimo-assets" } }, "*");
                 }}

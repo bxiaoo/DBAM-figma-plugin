@@ -6,8 +6,10 @@ interface SearchInputProps {
 
 export function SearchInput ({ handleSearch }: SearchInputProps) {
     return (
+        <div className='search-input'>
         <label>
-            <input type='text' onInput={(e) => {handleSearch(e.currentTarget.value)}} />
+            <input type='text' placeholder='Filter key words...' onInput={(e) => {handleSearch(e.currentTarget.value)}} />
         </label>
+        </div>
     )
 }
