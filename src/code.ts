@@ -50,7 +50,8 @@ figma.ui.onmessage = async (message) => {
 
         case "fetch-figma-assets":
         {
-            // const { fileId } = message;
+            const { selectedLib } = message;
+            const fileId = selectedLib ? selectedLib.fileId : defaultLib.fileId;
             // 1. looking for saved token
             const storedToken = await figma.clientStorage.getAsync("figmaApiToken");
             if (!storedToken) {
@@ -61,9 +62,8 @@ figma.ui.onmessage = async (message) => {
             }
             // 2. validate token
             try {
-                const iconList = await fetchFigmaAssets(storedToken, defaultLib.fileId);
-                console.log(iconList);
-                figma.ui.postMessage({ type: "icon-list-fetched", payload: iconList });
+                const iconList = await fetchFigmaAssets(storedToken, fileId);
+                figma.ui.postMessage({ type: "icon-list-fetched", payload: iconList, library: selectedLib ? selectedLib : defaultLib });
             } catch (error) {
                 figma.ui.postMessage({ type: "show-notification", message: (error as Error).toString(), messageType: 'error' });
             }

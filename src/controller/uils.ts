@@ -1,4 +1,4 @@
-import { ISizeVariant } from "../model/figmaAsset";
+import { ISize } from "../model/figmaAsset";
 import { libraryFiles } from "../model/libraries";
 
 interface FindLibOptions {
@@ -8,7 +8,7 @@ interface FindLibOptions {
 
 interface FindLibResults {
     libName: string;
-    sizeVariant: ISizeVariant[] | null;
+    sizeVariant: ISize[] | null;
 }
 
 export function findLib(options: FindLibOptions): FindLibResults {

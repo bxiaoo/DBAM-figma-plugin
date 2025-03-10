@@ -1,4 +1,4 @@
-export interface ISizeVariant {
+export interface ISize {
     name: string;
     x: number;
     y: number;
@@ -6,7 +6,7 @@ export interface ISizeVariant {
 export interface ILibrary {
     name: string;
     fileId: string;
-    sizeVariant: ISizeVariant[] | null;
+    sizeVariant: ISize[] | null;
 }
 export interface IBrandLibraries {
     brand: string;

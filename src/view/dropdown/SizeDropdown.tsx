@@ -1,19 +1,36 @@
 import * as React from "react";
-import {ISizeVariant} from "../../model/figmaAsset";
+import {ISize} from "../../model/figmaAsset";
 
 interface SizeDropdownProps {
-    sizes: ISizeVariant[];
-    handleSizeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    sizes: ISize[] | null;
+    handleSizeChange: (size: ISize) => void;
+    selectedSize: ISize;
 }
 
-export function SizeDropdown({sizes, handleSizeChange}: SizeDropdownProps) {
+export function SizeDropdown({sizes, handleSizeChange, selectedSize}: SizeDropdownProps) {
+    const [isOpen, setIsOpen] = React.useState(false);
+
+    const selSize = sizes?.find((size) => size.name === selectedSize?.name);
+
     return (
-        <select id='asset-variant' onChange={handleSizeChange}>
-            {sizes.map((size, index) => {
-                return (
-                    <option key={index} value={index}>{size.name}</option>
-                );
-            })}
-        </select>
+        <div className='size-selector'>
+            <button className='dropdown-btn' onClick={() => setIsOpen(!isOpen)}>
+                {selSize ? selSize.name : ''}
+            </button>
+
+            {sizes && isOpen && (
+                <div className='dropdown-menu'>
+                    {sizes.map((size) => (
+                        <div
+                            key={size.name}
+                            className='dropdown-item'
+                            onClick={() => handleSizeChange(size)}
+                        >
+                            {size.name}
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
     )
 }

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import {TokenInput} from "../input/TokenInput";
-import {IBrandLibraries, ILibrary, ISizeVariant} from "../../model/figmaAsset";
+import {IBrandLibraries, ILibrary, ISize} from "../../model/figmaAsset";
 import {IAsset} from "../../model/assetItem";
 import {LibDropdown} from "../dropdown/LibDropdown";
 import {AssetList} from "../assetList/AssetList";
-import {InsertModal} from "../modal/InsertModal";
-import {findLib} from "../../controller/uils";
+import {SizeDropdown} from "../dropdown/SizeDropdown";
 
 interface FigmaTabProps {
     msgCallback: (msg:string) => void;
@@ -14,9 +13,10 @@ interface FigmaTabProps {
 export function FigmaTab({msgCallback}: FigmaTabProps) {
     const [libList, setLibList] = React.useState<IBrandLibraries[] | null>(null);
     const [currentFileId, setCurrentFileId] = React.useState<string>('');
-    const [currentSizes, setCurrentSizes] = React.useState<ISizeVariant[] | null>(null);
-    const [showModal, setShowModal] = React.useState(false);
-    const [selectedAsset, setSelectedAsset] = React.useState<IAsset | null>(null);
+    const [currentSizes, setCurrentSizes] = React.useState<ISize[] | null>(null);
+    const [selectedSize, setSelectedSize] = React.useState<ISize>({name: 'unisize', x: 0, y: 0});
+    // const [showModal, setShowModal] = React.useState(false);
+    // const [selectedAsset, setSelectedAsset] = React.useState<IAsset | null>(null);
 
     const [loading, setLoading] = React.useState(false);
     const [showSetting, setShowSetting] = React.useState(true);
@@ -35,15 +35,16 @@ export function FigmaTab({msgCallback}: FigmaTabProps) {
             case "icon-list-fetched":
                 setAssetList(msg.payload);
                 setCurrentFileId(msg.library.fileId);
-                // setCurrentSizes(msg.library.sizeVariant);
+                setCurrentSizes(msg.library.sizeVariant);
+                setSelectedSize(msg.library.sizeVariant[0]);
                 setLoading(false);
                 break;
-            case "show-modal":
-                setShowModal(true);
-                setSelectedAsset(msg.asset);
-                break;
+            // case "show-modal":
+            //     setShowModal(true);
+            //     setSelectedAsset(msg.asset);
+            //     break;
             case "icon-inserted":
-                setShowModal(false);
+                // setShowModal(false);
                 msgCallback("asset inserted success!");
                 break;
             case "setting-view":
@@ -74,22 +75,35 @@ export function FigmaTab({msgCallback}: FigmaTabProps) {
         }, "*")
     }
 
-    const handleLibChange = (fileId: string) => {
-        setCurrentFileId(fileId);
+    const handleLibChange = (lib: ILibrary) => {
+
+        if (!lib) {
+            return parent.postMessage({
+                pluginMessage: {
+                    type: "show-notification",
+                    message: "No library selected",
+                }
+            })
+        }
+
+        setCurrentFileId(lib.fileId);
         setAssetList(null);
 
         setLoading(true);
 
-        const { sizeVariant } = findLib({fileId});
-        setCurrentSizes(sizeVariant);
-        setShowModal(false);
+        setCurrentSizes(lib.sizeVariant);
+        // setShowModal(false);
 
         parent.postMessage({
             pluginMessage: {
                 type: "fetch-figma-assets",
-                fileId: fileId,
+                selectedLib: lib
             }
         }, "*")
+    }
+
+    const handleSizeChange = (size:ISize) => {
+        setSelectedSize(size);
     }
 
     return (
@@ -105,10 +119,12 @@ export function FigmaTab({msgCallback}: FigmaTabProps) {
             {!showSetting && loading && <span>Loading...</span>}
 
             {assetList && <div className='asset-view'>
-                {libList && <LibDropdown handleLibChange={handleLibChange} options={libList} />}
-                {assetList && <AssetList assets={assetList} currentFileId={currentFileId!} sizes={currentSizes} />}
+                <div className='config-container'>
+                    {libList && <LibDropdown handleLibChange={handleLibChange} options={libList} selectedFileId={currentFileId} />}
+                    {currentSizes && <SizeDropdown sizes={currentSizes} handleSizeChange={handleSizeChange} selectedSize={selectedSize} />}
+                </div>
+                {assetList && <AssetList assets={assetList} displaySize={currentSizes ? currentSizes[0] : selectedSize}  size={selectedSize} />}
 
-                {showModal && currentSizes && selectedAsset && <InsertModal asset={selectedAsset} sizes={currentSizes}  />}
             </div>}
         </div>
     );
