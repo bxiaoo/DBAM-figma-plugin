@@ -1,6 +1,8 @@
 import * as React from "react";
 import {IBrandLibraries, ILibrary} from "../../model/figmaAsset";
 
+import './dropdown.style.css';
+
 interface LibDropdownProps {
     handleLibChange: (lib: ILibrary) => void;
     options: IBrandLibraries[];
@@ -17,13 +19,6 @@ export const LibDropdown = ({handleLibChange, options, selectedFileId}:LibDropdo
         .find((lib) =>
             lib.fileId === selectedFileId);
 
-    // const handleLibSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    //     const fileId = e.target.value;
-    //     console.log(fileId);
-    //     const lib = options.flatMap((brand) => brand.libraries).find((lib) => lib.fileId === fileId);
-    //     handleLibChange(lib as ILibrary);
-    // }
-
     React.useEffect(() => {
         const closeDropdown = (e: MouseEvent) => {
             if (!(e.target as HTMLElement).closest('.lib-selector')) {
@@ -38,7 +33,7 @@ export const LibDropdown = ({handleLibChange, options, selectedFileId}:LibDropdo
 
     return (
         <div className='lib-selector'>
-            <button className='dropdown-btn' onClick={() => setIsOpen(!isOpen)}>
+            <button className='dropdown-btn lib-btn' onClick={() => setIsOpen(!isOpen)}>
                 {selLib ? `${selLib.brand} - ${selLib.name}` : 'Select Library'}
             </button>
 

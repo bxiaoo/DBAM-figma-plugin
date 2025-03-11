@@ -6,12 +6,12 @@ import { createRoot } from "react-dom/client";
 
 import {AprimoTab} from "./view/tabs/AprimoTab";
 import {GDriveTab} from "./view/tabs/GDriveTab";
-import {FigmaTab} from "./view/tabs/FigmaTab";
+import {FigmaTab} from "./view/tabs/figmaTabViews/FigmaTab";
 
 import { Notification } from "./view/notification/Notification";
 
 import "./ui.css";
-import {IBrandLibraries} from "./model/figmaAsset";
+// import {IBrandLibraries} from "./model/figmaAsset";
 // import {libraryFiles} from "./model/libraries";
 // import {IBrandLibraries, ILibrary} from "./model/figmaAsset";
 // import {libraryFiles} from "./model/libraries";
@@ -32,28 +32,28 @@ function App() {
         }
     }, [notification]);
 
-    onmessage = (event) => {
-        const msg = event.data.pluginMessage;
-        switch (msg.type) {
-            case "aprimo-assets":
-                console.log("Aprimo Assets");
-                // displayAssets("aprimoList", msg.payload);
-                break;
-            case "gdrive-assets":
-                // displayAssets("gdriveList", msg.payload);
-                break;
-            // case "icon-list-fetched":
-            //     setAssetList(msg.payload);
-            //     break;
-
-            case "icon-inserted":
-                setNotification("Icon inserted successfully");
-                setTimeout(() => setNotification(''), 2000);
-                break;
-            default:
-                break;
-        }
-    };
+    // onmessage = (event) => {
+    //     const msg = event.data.pluginMessage;
+    //     switch (msg.type) {
+    //         case "aprimo-assets":
+    //             console.log("Aprimo Assets");
+    //             // displayAssets("aprimoList", msg.payload);
+    //             break;
+    //         case "gdrive-assets":
+    //             // displayAssets("gdriveList", msg.payload);
+    //             break;
+    //         // case "icon-list-fetched":
+    //         //     setAssetList(msg.payload);
+    //         //     break;
+    //
+    //         case "icon-inserted":
+    //             setNotification("Icon inserted successfully");
+    //             setTimeout(() => setNotification(''), 2000);
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // };
 
     const handleInsertMsg = (msg: string) => {
         setNotification(msg);

@@ -1,0 +1,36 @@
+
+.tab-content {
+    padding: 1rem;
+    background-color: #F4F7FA;
+}
+
+
+.main-view {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.about-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+.headline {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+#setting {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.config-container {
+    display: flex;
+    width: 100%;
+    /*flex-direction: column;*/
+}

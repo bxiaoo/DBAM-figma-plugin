@@ -1,6 +1,23 @@
 import { IBrandLibraries } from "./figmaAsset";
+import {IMenu} from "./menu";
 
 export const libraryFiles: IBrandLibraries[] = [
+    {
+        brand: "Universal",
+        libraries: [
+            {
+                name: "System icons",
+                fileId: "kywf7UGBVQgvSwlb3t8BJY",
+                sizeVariant: [
+                    {name: "20x20", x: 20, y: 20},
+                    {name: "14x14", x: 14, y: 14},
+                    {name: "16x16", x: 16, y: 16},
+                    {name: "24x24", x: 24, y: 24},
+                    {name: "32x32", x: 32, y: 32}
+                ]
+            },
+        ]
+    },
     {
         brand: "IONOS",
         libraries: [
@@ -14,29 +31,30 @@ export const libraryFiles: IBrandLibraries[] = [
                     {name: "64x64", x: 64, y: 64},
                 ]
             },
+
             {
                 name: "Illustrations",
                 fileId: "lGBQlGVQoPwDlPdaAv3E0P",
                 sizeVariant: [
+                    {name: "320x320", x: 320, y: 320},
                     {name: "480x480", x: 480, y: 480},
                 ]
             },
             {
-                name: "Logos",
-                fileId: "fPvg5tfzaGA5uLXll6jILD",
-                sizeVariant: null
+                name: "brandmarks",
+                fileId: "0o611Awje3OIWQ0ZPRH4b4",
+                sizeVariant: [
+                    {name: 'unisize', x: 0, y: 32}
+                ]
             },
             {
-                name: "System icons",
-                fileId: "kywf7UGBVQgvSwlb3t8BJY",
+                name: "Partner logos",
+                fileId: "hTuQ8bL3oBf8iruQnRTmZ5",
                 sizeVariant: [
-                    {name: "14x14", x: 14, y: 14},
-                    {name: "16x16", x: 16, y: 16},
-                    {name: "20x20", x: 20, y: 20},
-                    {name: "24x24", x: 24, y: 24},
-                    {name: "32x32", x: 32, y: 32}
+                    {name: 'unisize', x: 0, y: 32}
                 ]
             }
+
         ]
     },
     {
@@ -52,4 +70,13 @@ export const libraryFiles: IBrandLibraries[] = [
                     {name: "64x64", x: 64, y: 64},
                 ]
             }]}
+];
+
+export const menu:IMenu[] = [
+    {
+        name: "settings",
+    },
+    {
+        name: 'about'
+    }
 ]

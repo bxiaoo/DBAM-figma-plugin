@@ -1,6 +1,6 @@
 import {IAsset} from "../model/assetItem";
 
-export async function fetchFigmaAssets(token:string, fileId:string):Promise<IAsset[]> {
+export async function fetchFigmaAssets(token:string, fileId:string): Promise<IAsset[]> {
     const url = `https://api.figma.com/v1/files/${fileId}/components`;
 
     try {
@@ -10,6 +10,8 @@ export async function fetchFigmaAssets(token:string, fileId:string):Promise<IAss
                 "X-Figma-Token": token
             }
         });
+
+        console.log(resp.statusText);
 
         if (!resp.ok) {
             throw new Error(`Invalid token, please check it or regenerate from your figma configuration: ${resp.status}`);
@@ -24,6 +26,7 @@ export async function fetchFigmaAssets(token:string, fileId:string):Promise<IAss
             thumbnail_url: c.thumbnail_url,
             key: c.key
         }));
+
 
     } catch (error) {
         throw new Error(`Failed to fetch Figma assets: ${error}`);

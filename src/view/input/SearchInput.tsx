@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+import "./input.style.css"
+
 interface SearchInputProps {
     handleSearch: (query: string) => void;
 }

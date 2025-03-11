@@ -1,7 +1,10 @@
 import * as React from 'react';
+import {AssetItem} from "./AssetItem";
 import {IAsset} from "../../model/assetItem";
 import {SearchInput} from "../input/SearchInput";
 import {ISize} from "../../model/figmaAsset";
+
+import "./assetList.style.css";
 
 interface AssetListProps {
     assets: IAsset[];
@@ -10,41 +13,13 @@ interface AssetListProps {
     displaySize: ISize;
 }
 
-interface IDisplaySize {
+export interface IDisplaySize {
     width: string;
     height: string;
 }
 
 export function AssetList({ assets, size, displaySize }: AssetListProps) {
     const [filteredAssets, setFilteredAssets] = React.useState<IAsset[]>(assets);
-    // const [selectedAsset, setSelectedAsset] = React.useState<IAsset | null>(null);
-    // const [displaySize, setDisplaySize] = React.useState<IDisplaySize>({ width: 'auto', height: 'auto' });
-
-    // React.useEffect(() => {
-    //     if (selectedAsset && sizes) {
-    //         parent.postMessage({
-    //             pluginMessage: {
-    //                 type: "select-asset",
-    //                 fileId: currentFileId,
-    //                 asset: selectedAsset
-    //             }
-    //         }, "*");
-    //     } else {
-    //         parent.postMessage({
-    //             pluginMessage: {
-    //                 type: 'insert',
-    //                 key: selectedAsset?.key,
-    //                 name: selectedAsset?.name,
-    //             }
-    //         }, "*");
-    //     }
-    //
-    //     if (sizes) {
-    //         setDisplaySize({ width: sizes[sizes.length - 1].x.toString(), height: sizes[sizes.length - 1].y.toString() });
-    //     } else {
-    //         setDisplaySize({ width: 'auto', height: 'auto' });
-    //     }
-    // }, [selectedAsset, sizes]);
 
     const handleSearch = (query: string) => {
         const filtered = assets.filter((asset) => {
@@ -64,26 +39,22 @@ export function AssetList({ assets, size, displaySize }: AssetListProps) {
         }, "*");
     }
 
-    // const handleSelectedAsset = (instance:IAsset) => {
-    //     setSelectedAsset(instance);
-    //     // parent.postMessage({ pluginMessage: { type: 'select-asset', fileId: currentFileId, asset: selectedAsset} }, '*');
-    // }
-
     return (
         <div>
             {assets ? <div className='asset-container'>
                 <SearchInput handleSearch={handleSearch} />
                 <div className='asset-list'>
-                    {filteredAssets.map((asset, index) => {
+                    {filteredAssets
+                        .slice()
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map((asset, index) => {
                     return (
-                        <button className='asset-item' key={index} onClick={() => handleInsert(asset)}>
-                            <img src={asset.thumbnail_url} width={displaySize.x} height={displaySize.y} />
-                            {/*<p className='asset-name'>{asset.name}</p>*/}
-                        </button>
+                        <AssetItem key={index} asset={asset} handleInsert={handleInsert} displaySize={displaySize} />
                     );
-                })}</div>
+                })}
+                    {!filteredAssets && <p>No such assets found in that file.</p>}</div>
             </div>
-                : <p>No assets found in that file.</p>
+                : <p>No such assets found in that file.</p>
             }
         </div>
     );

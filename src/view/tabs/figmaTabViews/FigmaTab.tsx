@@ -1,10 +1,16 @@
 import * as React from 'react';
-import {TokenInput} from "../input/TokenInput";
-import {IBrandLibraries, ILibrary, ISize} from "../../model/figmaAsset";
-import {IAsset} from "../../model/assetItem";
-import {LibDropdown} from "../dropdown/LibDropdown";
-import {AssetList} from "../assetList/AssetList";
-import {SizeDropdown} from "../dropdown/SizeDropdown";
+import {IBrandLibraries, ILibrary, ISize} from "../../../model/figmaAsset";
+import {IAsset} from "../../../model/assetItem";
+import {LibDropdown} from "../../dropdown/LibDropdown";
+import {AssetList} from "../../assetList/AssetList";
+import {SizeDropdown} from "../../dropdown/SizeDropdown";
+import {MenuDropdown} from "../../dropdown/MenuDropdown";
+import {menu} from "../../../model/libraries";
+import {IMenu} from "../../../model/menu";
+
+import "./tab.style.css";
+import {Settings} from "./Settings";
+import { About } from "./About";
 
 interface FigmaTabProps {
     msgCallback: (msg:string) => void;
@@ -15,12 +21,12 @@ export function FigmaTab({msgCallback}: FigmaTabProps) {
     const [currentFileId, setCurrentFileId] = React.useState<string>('');
     const [currentSizes, setCurrentSizes] = React.useState<ISize[] | null>(null);
     const [selectedSize, setSelectedSize] = React.useState<ISize>({name: 'unisize', x: 0, y: 0});
-    // const [showModal, setShowModal] = React.useState(false);
-    // const [selectedAsset, setSelectedAsset] = React.useState<IAsset | null>(null);
 
     const [loading, setLoading] = React.useState(false);
-    const [showSetting, setShowSetting] = React.useState(true);
     const [tokenValidating, setTokenValidating] = React.useState(false);
+    const [foundToken, setFoundToken] = React.useState(false);
+
+    const [view, setView] = React.useState<string>('main');
 
     const [assetList, setAssetList] = React.useState<IAsset[] | null>(null);
 
@@ -31,7 +37,6 @@ export function FigmaTab({msgCallback}: FigmaTabProps) {
                 console.log("Init DBAM Interface");
                 setLibList(msg.libraries);
                 break;
-
             case "icon-list-fetched":
                 setAssetList(msg.payload);
                 setCurrentFileId(msg.library.fileId);
@@ -39,30 +44,29 @@ export function FigmaTab({msgCallback}: FigmaTabProps) {
                 setSelectedSize(msg.library.sizeVariant[0]);
                 setLoading(false);
                 break;
-            // case "show-modal":
-            //     setShowModal(true);
-            //     setSelectedAsset(msg.asset);
-            //     break;
             case "icon-inserted":
-                // setShowModal(false);
                 msgCallback("asset inserted success!");
                 break;
-            case "setting-view":
-                setShowSetting(msg.showSetting);
+            case "view":
+                setView(msg.view);
                 break;
             case "invalid-token":
                 setTokenValidating(msg.validating);
                 break;
             case "show-notification":
-                console.log("show notification");
+                console.log("show notification: " + msg.message);
                 msgCallback(msg.message);
                 break;
+            case "loading":
+                setLoading(msg.loading);
+                break;
+                case "token-found":
+                    setFoundToken(msg.foundToken);
 
         }
     }
 
     const handleTokenSave = (token: string) => {
-        setLoading(true);
 
         setTokenValidating(true);
 
@@ -86,42 +90,63 @@ export function FigmaTab({msgCallback}: FigmaTabProps) {
             })
         }
 
+        // update the current file id
         setCurrentFileId(lib.fileId);
+
+        // clear the asset list and the view
         setAssetList(null);
 
-        setLoading(true);
-
+        // update the current sizes of library specified
         setCurrentSizes(lib.sizeVariant);
-        // setShowModal(false);
 
+        // fetch the assets from the selected library
         parent.postMessage({
             pluginMessage: {
                 type: "fetch-figma-assets",
                 selectedLib: lib
             }
         }, "*")
+
+        // show loading...
+        parent.postMessage({
+            pluginMessage: {
+                type: "loading",
+                loading: true
+            }
+        }, "*")
     }
 
     const handleSizeChange = (size:ISize) => {
+        // store and update the current selected size
         setSelectedSize(size);
+    }
+
+    // handle the views
+    const handleMenuSelect = (item: IMenu) => {
+        setView(item.name);
+    }
+
+    const handleSettingCancel = () => {
+        setView("main");
     }
 
     return (
         <div className='tab-content'>
-            {showSetting && <div id='setting'>
-                <div className='headline'>
-                    <h1>Authentication</h1>
-                    <p>This token is requested to fetch assets from your account.</p>
-                </div>
-                <TokenInput onSaveToken={handleTokenSave} validating={tokenValidating} />
-            </div>}
+            {!loading && view === 'settings' && <Settings
+                handleToken={handleTokenSave}
+                validating={tokenValidating}
+                hasToken={foundToken}
+                handleCancel={handleSettingCancel} />}
 
-            {!showSetting && loading && <span>Loading...</span>}
+            {!loading && view === 'about' && <About handleBack={handleSettingCancel} />}
 
-            {assetList && <div className='asset-view'>
+            {loading && <span>Loading...</span>}
+
+            {!loading && view === 'main' && assetList && <div className='main-view'>
                 <div className='config-container'>
                     {libList && <LibDropdown handleLibChange={handleLibChange} options={libList} selectedFileId={currentFileId} />}
                     {currentSizes && <SizeDropdown sizes={currentSizes} handleSizeChange={handleSizeChange} selectedSize={selectedSize} />}
+                    <MenuDropdown items={menu} onSelect={handleMenuSelect} />
                 </div>
                 {assetList && <AssetList assets={assetList} displaySize={currentSizes ? currentSizes[0] : selectedSize}  size={selectedSize} />}
 

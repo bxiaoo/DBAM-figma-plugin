@@ -59,13 +59,19 @@ figma.ui.onmessage = async (message) => {
                 figma.ui.postMessage({ type: "setting-view", showSetting: true });
                 figma.ui.postMessage({ type: 'show-notification', message: "Please enter your personal token", messageType: 'warning' });
                 return
-            }
-            // 2. validate token
-            try {
+            } else {
+                // 2. validate token
+                figma.ui.postMessage({ type: "token-found", foundToken: true });
+                figma.ui.postMessage({ type: "setting-view", showSetting: false });
+                figma.ui.postMessage({type: 'loading', loading: true});
                 const iconList = await fetchFigmaAssets(storedToken, fileId);
-                figma.ui.postMessage({ type: "icon-list-fetched", payload: iconList, library: selectedLib ? selectedLib : defaultLib });
-            } catch (error) {
-                figma.ui.postMessage({ type: "show-notification", message: (error as Error).toString(), messageType: 'error' });
+                figma.ui.postMessage({
+                    type: "icon-list-fetched",
+                    payload: iconList,
+                    library: selectedLib ? selectedLib : defaultLib
+                });
+
+                figma.ui.postMessage({ type: "init-libraries", libraries: libraryFiles });
             }
             break;
         }
@@ -99,7 +105,12 @@ figma.ui.onmessage = async (message) => {
             figma.ui.postMessage({ type: "icon-inserted", name });
             break;
         }
-
+        case "loading":
+        {
+            const { loading } = message;
+            figma.ui.postMessage({ type: "loading", loading });
+            break;
+        }
         default:
             break;
     }
@@ -107,28 +118,35 @@ figma.ui.onmessage = async (message) => {
 
 async function init() {
     // debug
-    await figma.clientStorage.deleteAsync("figmaApiToken");
+    // await figma.clientStorage.deleteAsync("figmaApiToken");
 
-    // send the library infos to the UI
-    figma.ui.postMessage({ type: "init-libraries", libraries: libraryFiles });
+        const storedToken: string = await figma.clientStorage.getAsync("figmaApiToken");
 
-    const storedToken:string = await figma.clientStorage.getAsync("figmaApiToken");
-    if (storedToken) {
-        console.log(storedToken);
-        figma.ui.postMessage({type: "setting-view", showSettings: false });
-        fetchFigmaAssets(storedToken, defaultLib.fileId).then((iconList) => {
+        if (storedToken) {
+
+            figma.ui.postMessage({ type: "token-found", foundToken: true });
+
+            figma.ui.postMessage({type: "view", view: 'main' });
+            figma.ui.postMessage({ type: 'loading', loading: true });
+
+            const iconList = await fetchFigmaAssets(storedToken, defaultLib.fileId);
+
             figma.ui.postMessage({ type: "icon-list-fetched", payload: iconList, library: defaultLib });
-        });
-        figma.ui.postMessage({type: 'show-notification', message: "token founded", messageType: 'success'});
-    } else {
-        console.info("no saved token founded");
-        // figma.ui.postMessage({ type: "setting-view", showSetting: true });
-        figma.ui.postMessage({type: 'show-notification', message: "token not founded", messageType: 'error'});
-    }
+
+            figma.ui.postMessage({type: 'show-notification', message: "token founded", messageType: 'success'});
+
+        } else {
+            console.info("no saved token founded");
+            figma.ui.postMessage({type: 'show-notification', message: "token not founded", messageType: 'error'});
+        }
+
+    figma.ui.postMessage({ type: "init-libraries", libraries: libraryFiles });
 
 }
 
-init();
 
-figma.showUI(__html__, { width: 402, height: 625 });
+figma.showUI(__html__, { width: 396, height: 580 });
+
+
+await init();
 
