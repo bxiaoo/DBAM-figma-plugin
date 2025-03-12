@@ -15,7 +15,7 @@ figma.ui.onmessage = async (message) => {
                 await fetchFigmaAssets(token, defaultLib.fileId).then((iconList) => {
                     figma.clientStorage.setAsync("figmaApiToken", token);
 
-                    figma.ui.postMessage({ type: "setting-view", showSetting: false });
+                    figma.ui.postMessage({ type: "view", view: 'main' });
 
                     figma.ui.postMessage({ type: "show-notification", message: 'token saved!'});
 
@@ -94,8 +94,6 @@ figma.ui.onmessage = async (message) => {
         {
             const { key, size, name } = message;
 
-            console.log(size)
-
             if (size) {
                 await insertInstance(key, name, size.x, size.y);
             } else {
@@ -137,6 +135,7 @@ async function init() {
 
         } else {
             console.info("no saved token founded");
+            figma.ui.postMessage({type: "view", view: 'settings' });
             figma.ui.postMessage({type: 'show-notification', message: "token not founded", messageType: 'error'});
         }
 

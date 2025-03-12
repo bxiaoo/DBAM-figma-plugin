@@ -32,29 +32,6 @@ function App() {
         }
     }, [notification]);
 
-    // onmessage = (event) => {
-    //     const msg = event.data.pluginMessage;
-    //     switch (msg.type) {
-    //         case "aprimo-assets":
-    //             console.log("Aprimo Assets");
-    //             // displayAssets("aprimoList", msg.payload);
-    //             break;
-    //         case "gdrive-assets":
-    //             // displayAssets("gdriveList", msg.payload);
-    //             break;
-    //         // case "icon-list-fetched":
-    //         //     setAssetList(msg.payload);
-    //         //     break;
-    //
-    //         case "icon-inserted":
-    //             setNotification("Icon inserted successfully");
-    //             setTimeout(() => setNotification(''), 2000);
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // };
-
     const handleInsertMsg = (msg: string) => {
         setNotification(msg);
     }
@@ -63,24 +40,24 @@ function App() {
         <div id="plugin-window">
             <nav>
                 <div className='tab-nav'>
-                <button
-                    className={activeTab === "aprimo" ? "active" : ""}
-                    onClick={() => {
-                        setActiveTab("aprimo");
-                        parent.postMessage({pluginMessage: {type: "fetch-aprimo-assets"}}, "*");
-                    }}
-                >
-                    <img src={require('./assets/aprimo_logo.svg')} />
-                </button>
-                <button
-                    className={activeTab === "gdrive" ? "active" : ""}
-                    onClick={() => {
-                        setActiveTab("gdrive");
-                        parent.postMessage({pluginMessage: {type: "fetch-gdrive-assets"}}, "*");
-                    }}
-                >
-                    <img src={require('./assets/google_logo.svg')} />
-                </button>
+                {/*<button*/}
+                {/*    className={activeTab === "aprimo" ? "active" : ""}*/}
+                {/*    onClick={() => {*/}
+                {/*        setActiveTab("aprimo");*/}
+                {/*        parent.postMessage({pluginMessage: {type: "fetch-aprimo-assets"}}, "*");*/}
+                {/*    }}*/}
+                {/*>*/}
+                {/*    <img src={require('./assets/aprimo_logo.svg')} />*/}
+                {/*</button>*/}
+                {/*<button*/}
+                {/*    className={activeTab === "gdrive" ? "active" : ""}*/}
+                {/*    onClick={() => {*/}
+                {/*        setActiveTab("gdrive");*/}
+                {/*        parent.postMessage({pluginMessage: {type: "fetch-gdrive-assets"}}, "*");*/}
+                {/*    }}*/}
+                {/*>*/}
+                {/*    <img src={require('./assets/google_logo.svg')} />*/}
+                {/*</button>*/}
                 <button
                     className={activeTab === "figma" ? "active" : ""}
                     onClick={() => {

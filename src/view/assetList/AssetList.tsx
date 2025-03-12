@@ -34,7 +34,7 @@ export function AssetList({ assets, size, displaySize }: AssetListProps) {
                 type: 'insert',
                 key: asset.key,
                 size: size,
-                name: asset.name,
+                name: asset.name
             }
         }, "*");
     }

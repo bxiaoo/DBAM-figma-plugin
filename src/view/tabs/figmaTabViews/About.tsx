@@ -17,7 +17,7 @@ export function About(props:AboutProps ) {
 
             <h2>Credits</h2>
             <p>
-                Created and maintained by <strong>Bowei Xiao</strong>.
+                Created and maintained by <strong>B. Xiao</strong>.
             </p>
 
             <h2>Contact</h2>

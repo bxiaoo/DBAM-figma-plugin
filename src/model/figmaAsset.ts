@@ -7,6 +7,8 @@ export interface ILibrary {
     name: string;
     fileId: string;
     sizeVariant: ISize[] | null;
+    minSize?: ISize;
+    maxSize?: ISize;
 }
 export interface IBrandLibraries {
     brand: string;

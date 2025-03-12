@@ -21,6 +21,7 @@ export function FigmaTab({msgCallback}: FigmaTabProps) {
     const [currentFileId, setCurrentFileId] = React.useState<string>('');
     const [currentSizes, setCurrentSizes] = React.useState<ISize[] | null>(null);
     const [selectedSize, setSelectedSize] = React.useState<ISize>({name: 'unisize', x: 0, y: 0});
+    const [sizeContraints, setSizeContraints] = React.useState<ISize[] >();
 
     const [loading, setLoading] = React.useState(false);
     const [tokenValidating, setTokenValidating] = React.useState(false);
@@ -43,9 +44,6 @@ export function FigmaTab({msgCallback}: FigmaTabProps) {
                 setCurrentSizes(msg.library.sizeVariant);
                 setSelectedSize(msg.library.sizeVariant[0]);
                 setLoading(false);
-                break;
-            case "icon-inserted":
-                msgCallback("asset inserted success!");
                 break;
             case "view":
                 setView(msg.view);

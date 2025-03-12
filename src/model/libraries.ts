@@ -14,7 +14,9 @@ export const libraryFiles: IBrandLibraries[] = [
                     {name: "16x16", x: 16, y: 16},
                     {name: "24x24", x: 24, y: 24},
                     {name: "32x32", x: 32, y: 32}
-                ]
+                ],
+                minSize: {name: "14x14", x: 14, y: 14},
+                maxSize: {name: "32x32", x: 32, y: 32}
             },
         ]
     },
@@ -29,7 +31,9 @@ export const libraryFiles: IBrandLibraries[] = [
                     {name: "36x36", x: 36, y: 36},
                     {name: "48x48", x: 48, y: 48},
                     {name: "64x64", x: 64, y: 64},
-                ]
+                ],
+                minSize: {name: "32x32", x: 32, y: 32},
+                maxSize: {name: "64x64", x: 64, y: 64}
             },
 
             {
@@ -38,7 +42,9 @@ export const libraryFiles: IBrandLibraries[] = [
                 sizeVariant: [
                     {name: "320x320", x: 320, y: 320},
                     {name: "480x480", x: 480, y: 480},
-                ]
+                ],
+                minSize: {name: "320x320", x: 320, y: 320},
+                maxSize: {name: "480x480", x: 480, y: 480}
             },
             {
                 name: "brandmarks",
@@ -68,7 +74,9 @@ export const libraryFiles: IBrandLibraries[] = [
                     {name: "36x36", x: 36, y: 36},
                     {name: "48x48", x: 48, y: 48},
                     {name: "64x64", x: 64, y: 64},
-                ]
+                ],
+                minSize: {name: "32x32", x: 32, y: 32},
+                maxSize: {name: "64x64", x: 64, y: 64}
             }]}
 ];
 
