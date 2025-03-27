@@ -64,6 +64,28 @@ export const libraryFiles: IBrandLibraries[] = [
         ]
     },
     {
+        brand: "Strato",
+        libraries: [
+            {
+                name: "product icons",
+                fileId: "TL9sbzz63uGeRHp1qQ6RI0",
+                sizeVariant: [
+                    {name: "32x32", x: 32, y: 32},
+                    {name: "36x36", x: 36, y: 36},
+                    {name: "48x48", x: 48, y: 48},
+                    {name: "64x64", x: 64, y: 64},
+                ],
+            },
+            {
+                name: "brandmarks",
+                fileId: "i5tpbp7FfwHCNnXvX2vKVU",
+                sizeVariant: [
+                    {name: 'unisize', x: 0, y: 32}
+                ]
+            }
+        ]
+    },
+    {
         brand: "Home.pl",
         libraries: [
             {
