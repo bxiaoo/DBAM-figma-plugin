@@ -1,7 +1,7 @@
 {
-  "name": "DAM-asset-library-PoC",
-  "version": "1.0.0",
-  "description": "Your Figma Plugin",
+  "name": "Digital Brand Asset Management",
+  "version": "1.0.1",
+  "description": "The digital brand asset management plugin for Figma is the internal assets solution for IONOS group with the multi-brand support.",
   "main": "code.js",
   "scripts": {
     "build": "webpack --mode=production",

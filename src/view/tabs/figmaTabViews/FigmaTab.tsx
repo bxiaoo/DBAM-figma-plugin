@@ -58,8 +58,9 @@ export function FigmaTab({msgCallback}: FigmaTabProps) {
             case "loading":
                 setLoading(msg.loading);
                 break;
-                case "token-found":
-                    setFoundToken(msg.foundToken);
+            case "token-found":
+                setFoundToken(msg.foundToken);
+                break;
 
         }
     }

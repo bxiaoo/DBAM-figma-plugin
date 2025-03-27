@@ -1,4 +1,5 @@
-export async function insertInstance(key:string, name:string, sizeX?:number, sizeY?:number) {
+
+export async function insertInstance(key: string, name: string, sizeX?: number, sizeY?: number) {
     const selection = figma.currentPage.selection;
 
     try {
@@ -15,13 +16,13 @@ export async function insertInstance(key:string, name:string, sizeX?:number, siz
                 selectedNode.type === "COMPONENT" ||
                 selectedNode.type === "INSTANCE"
             ) {
-
-                console.log(selectedNode.type);
                 // 1) Create a new instance from the master
                 const instance = publishedComp.createInstance();
 
                 instance.lockAspectRatio()
                 if (sizeX && sizeY) instance.resize(sizeX, sizeY);
+
+
                 instance.name = name;
 
                 // if (selectedNode.type === "INSTANCE") {
@@ -61,6 +62,8 @@ export async function insertInstance(key:string, name:string, sizeX?:number, siz
                     case "INSTANCE":
                         selectedNode.swapComponent(publishedComp);
                         figma.notify("Instance updated!");
+
+                        insertedCount++;
                         break;
                     case "GROUP":
                         figma.notify("Asset should not be inserted in a group");
@@ -68,18 +71,20 @@ export async function insertInstance(key:string, name:string, sizeX?:number, siz
                     default:
                         try {
                             selectedNode.appendChild(instance);
+
+                            insertedCount++;
                         } catch (error) {
                             figma.currentPage.appendChild(instance);
 
                             instance.x = 0;
                             instance.y = 0;
                             figma.notify("Asset inserted in the center of the viewport");
+
+                            insertedCount++;
                         }
                         break;
 
                 }
-
-                insertedCount++;
 
 
             }

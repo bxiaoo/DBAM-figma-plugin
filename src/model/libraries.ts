@@ -77,7 +77,8 @@ export const libraryFiles: IBrandLibraries[] = [
                 ],
                 minSize: {name: "32x32", x: 32, y: 32},
                 maxSize: {name: "64x64", x: 64, y: 64}
-            }]}
+            }]
+    }
 ];
 
 export const menu:IMenu[] = [

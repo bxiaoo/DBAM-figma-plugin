@@ -11,6 +11,8 @@ interface AssetListProps {
     // sizes: ISizeVariant[] | null;
     size: ISize;
     displaySize: ISize;
+    minSize?: ISize | null;
+    maxSize?: ISize | null;
 }
 
 export interface IDisplaySize {
