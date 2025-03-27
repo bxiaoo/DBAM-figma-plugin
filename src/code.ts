@@ -3,7 +3,6 @@
 import { libraryFiles } from "./model/libraries";
 import { fetchFigmaAssets, fetchAprimoAssets, fetchGoogleDriveAssets } from "./controller/fetchAssets";
 import { insertInstance } from "./controller/insertAsset";
-import { findLib } from "./controller/uils";
 
 const defaultLib = libraryFiles[0].libraries[0];
 
@@ -72,21 +71,6 @@ figma.ui.onmessage = async (message) => {
                 });
 
                 figma.ui.postMessage({ type: "init-libraries", libraries: libraryFiles });
-            }
-            break;
-        }
-
-        case "select-asset":
-        {
-            const { fileId, asset } = message;
-
-            try {
-                const { sizeVariant } = findLib({ fileId: fileId });
-                console.log('selected asset' + sizeVariant);
-                figma.ui.postMessage({ type: "show-modal", sizeVariant, asset });
-
-            } catch (error) {
-                console.error("Unable to find file ID", fileId);
             }
             break;
         }

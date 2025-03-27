@@ -17,13 +17,9 @@ export async function insertInstance(key: string, name: string, sizeX?: number, 
                 selectedNode.type === "INSTANCE"
             ) {
                 // 1) Create a new instance from the master
-                const instance = publishedComp.createInstance();
-
-                instance.lockAspectRatio()
-                if (sizeX && sizeY) instance.resize(sizeX, sizeY);
 
 
-                instance.name = name;
+
 
                 // if (selectedNode.type === "INSTANCE") {
                 //     // selectedNode.getMainComponentAsync().then((comp) => {
@@ -58,8 +54,11 @@ export async function insertInstance(key: string, name: string, sizeX?: number, 
                 //     insertedCount++;
                 // }
 
+                console.log(selectedNode.type)
+
                 switch (selectedNode.type) {
                     case "INSTANCE":
+
                         selectedNode.swapComponent(publishedComp);
                         figma.notify("Instance updated!");
 
@@ -67,13 +66,24 @@ export async function insertInstance(key: string, name: string, sizeX?: number, 
                         break;
                     case "GROUP":
                         figma.notify("Asset should not be inserted in a group");
+                        insertedCount++;
                         break;
                     default:
                         try {
+                            const instance = publishedComp.createInstance();
+                            instance.lockAspectRatio()
+                            if (sizeX && sizeY) instance.resize(sizeX, sizeY);
+
                             selectedNode.appendChild(instance);
+
+                            figma.notify("Instance created!");
 
                             insertedCount++;
                         } catch (error) {
+                            const instance = publishedComp.createInstance();
+                            instance.lockAspectRatio()
+                            if (sizeX && sizeY) instance.resize(sizeX, sizeY);
+
                             figma.currentPage.appendChild(instance);
 
                             instance.x = 0;
@@ -85,7 +95,6 @@ export async function insertInstance(key: string, name: string, sizeX?: number, 
                         break;
 
                 }
-
 
             }
         }
@@ -99,6 +108,8 @@ export async function insertInstance(key: string, name: string, sizeX?: number, 
             figma.currentPage.appendChild(instance);
             instance.x = figma.viewport.center.x;
             instance.y = figma.viewport.center.y;
+
+            console.log("run the insert once");
 
             figma.notify("Asset inserted in the center of the viewport");
 
