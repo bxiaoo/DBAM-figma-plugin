@@ -18,6 +18,13 @@ export const libraryFiles: IBrandLibraries[] = [
                 minSize: {name: "14x14", x: 14, y: 14},
                 maxSize: {name: "32x32", x: 32, y: 32}
             },
+            {
+                name: "miscellaneous",
+                fileId: "demHNBankQAv4IoEtokMB0",
+                sizeVariant: [
+                    {name: "unisize", x: 0, y: 32}
+                ]
+            }
         ]
     },
     {
