@@ -19,6 +19,17 @@ export const libraryFiles: IBrandLibraries[] = [
                 maxSize: {name: "32x32", x: 32, y: 32}
             },
             {
+                name: "Proprietary icons",
+                fileId: "19FNhJ0EAnVpixXu44sMEc",
+                sizeVariant: [
+                    {name: "20x20", x: 20, y: 20},
+                    {name: "14x14", x: 14, y: 14},
+                    {name: "16x16", x: 16, y: 16},
+                    {name: "24x24", x: 24, y: 24},
+                    {name: "32x32", x: 32, y: 32}
+                ]
+            },
+            {
                 name: "miscellaneous",
                 fileId: "demHNBankQAv4IoEtokMB0",
                 sizeVariant: [
