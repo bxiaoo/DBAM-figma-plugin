@@ -30,7 +30,11 @@
     gap: 1rem;
 }
 .config-container {
+    position: sticky;
+    top: 12px;
     display: flex;
     width: 100%;
+
+    z-index: 80;
     /*flex-direction: column;*/
 }

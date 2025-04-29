@@ -37,6 +37,9 @@ input:focus {
 
 .search-input {
     width: 100%;
+    position: sticky;
+    top: 44px;
+    z-index: 20;
 }
 
 .token-btn-container {
